@@ -1,9 +1,8 @@
-import _FieldPlugin from './components/FieldPlugin'
-import FieldPluginExample from './components/FieldPluginExample'
+import FieldPluginM3u8 from './components/FieldPluginM3u8'
 import { FunctionComponent } from 'react'
 
 const App: FunctionComponent = () => {
-  return <FieldPluginExample />
+  return <FieldPluginM3u8 />
 }
 
 export default App
