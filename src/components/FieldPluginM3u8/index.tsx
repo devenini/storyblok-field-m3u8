@@ -55,7 +55,7 @@ const FieldPlugin: FunctionComponent = () => {
             setError(null);
         } else {
             actions.setContent({ src: value, provider: null });
-            setError(value === '' ? 'This field cannot be empty' : 'Invalid format. Enter a valid .m3u8 / .mp4 URL.');
+            setError(value === '' ? 'This field cannot be empty' : 'Invalid format. Enter a valid .m3u8 / .mp4 URL or Mux ID.');
         }
     };
     
@@ -77,11 +77,11 @@ const FieldPlugin: FunctionComponent = () => {
                 id="video-url"
                 value={src || ''}
                 onChange={handleChange}
-                placeholder="Enter Video URL (.m3u8 / .mp4)"
-                label="Video URL"
+                placeholder="Enter Video URL (.m3u8 / .mp4) or Mux ID"
+                label="Video URL / Mux ID"
                 size="small"
                 error={!!error}
-                helperText={error ?? 'Enter a valid .m3u8 / .mp4 URL'}
+                helperText={error ?? 'Enter a valid .m3u8 / .mp4 URL or Mux ID'}
                 fullWidth
             />
             {player}
