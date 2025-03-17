@@ -9,7 +9,7 @@ import {
     TextField,
 } from '@mui/material'
 
-type Provider = 'mux' | 'direct' | 'vimeo';
+type Provider = 'mux' | 'direct' | 'vimeo' | 'muxId';
 
 type VideoContent = {
     provider: Provider | null;
@@ -17,7 +17,7 @@ type VideoContent = {
 };
 
 const detectProvider = (value: string): VideoContent | null => {
-    if (/^(https?:\/\/stream\.mux\.com\/)?[a-zA-Z0-9_-]+(\.m3u8)?$/.test(value)) {
+    if (/^https?:\/\/stream\.mux\.com\/[a-zA-Z0-9_-]+(\.m3u8)?$/.test(value)) {
         return { provider: 'mux', src: value };
     }
     if (/^https?:\/\/player\.vimeo\.com\/external\/\d+\.m3u8(\?.*)?$/.test(value)) {
@@ -25,6 +25,9 @@ const detectProvider = (value: string): VideoContent | null => {
     }
     if (/^https?:\/\/[\w./?=&-]+$/.test(value) && (value.endsWith('.m3u8') || value.endsWith('.mp4'))) {
         return { provider: 'direct', src: value };
+    }
+    if (/^[a-zA-Z0-9_-]{8,}$/.test(value)) {
+        return { provider: 'muxId', src: value };
     }
     return null;
 };
@@ -57,11 +60,15 @@ const FieldPlugin: FunctionComponent = () => {
     };
     
     const { src, provider } = (data.content as VideoContent) || { src: '', provider: null };
+    console.log(provider);
+    
     const isValid = provider !== null;
 
     let player = null;
-    if (isValid && provider !== null) {
+    if (isValid && provider !== null && provider !== 'muxId') {
         player = <MuxPlayer src={src} className="player" />;
+    } else if (provider === 'muxId') {
+        player = <MuxPlayer playbackId={src} className="player" />;
     }
 
     return (
