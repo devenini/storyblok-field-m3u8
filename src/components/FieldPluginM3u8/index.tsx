@@ -60,7 +60,6 @@ const FieldPlugin: FunctionComponent = () => {
     };
     
     const { src, provider } = (data.content as VideoContent) || { src: '', provider: null };
-    console.log(provider);
     
     const isValid = provider !== null;
 
